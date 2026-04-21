@@ -161,7 +161,7 @@
     width: 100%; border: 1px solid var(--border); border-radius: 5px;
     padding: 6px 10px; font-size: 14px; font-family: inherit; color: var(--text);
     outline: none; min-height: 36px; line-height: 1.5; resize: none;
-    box-sizing: border-box;
+    box-sizing: border-box; overflow: hidden; height: auto;
   }
   .note-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(37,99,168,.12); }
 
@@ -764,7 +764,7 @@ function buildTable(sec) {
         </div>
         <div class="status-print" id="sp-${id}"></div>`}
       </td>
-      <td>${item.group ? '' : `<div class="note-wrap"><textarea class="note-input" id="note-${id}" placeholder="Số hiệu, ngày tháng, ghi chú..." oninput="setNote('${id}',this.value)">${state[id].note || ''}</textarea><div class="note-print" id="nprt-${id}" >${state[id].note || ''}</div></div>`}</td>
+      <td>${item.group ? '' : `<div class="note-wrap"><textarea class="note-input" id="note-${id}" placeholder="Số hiệu, ngày tháng, ghi chú..." oninput="setNote('${id}',this.value);this.style.height='auto';this.style.height=this.scrollHeight+'px'">${state[id].note || ''}</textarea><div class="note-print" id="nprt-${id}" >${state[id].note || ''}</div></div>`}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -890,7 +890,7 @@ function loadState() {
             if (sp) { sp.textContent = spLabels[s] || ''; sp.style.color = spColors[s] || ''; }
           }
           const noteEl = document.getElementById(`note-${id}`);
-          if (noteEl && state[id].note) { noteEl.value = state[id].note; const nprt = document.getElementById('nprt-' + id); if (nprt) { nprt.textContent = state[id].note; } }
+          if (noteEl && state[id].note) { noteEl.value = state[id].note; noteEl.style.height='auto'; noteEl.style.height=noteEl.scrollHeight+'px'; const nprt = document.getElementById('nprt-' + id); if (nprt) { nprt.textContent = state[id].note; } }
         }
       });
     }

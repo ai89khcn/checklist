@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist Hồ Sơ Hoàn Thành Công Trình</title>
+<style>
+  :root {
+    --primary: #1a4f8a;
+    --primary-light: #2563a8;
+    --accent: #f59e0b;
+    --green: #16a34a;
+    --red: #dc2626;
+    --gray: #6b7280;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --section-a: #dbeafe;
+    --section-b: #d1fae5;
+    --section-c: #fce7f3;
+    --shadow: 0 2px 8px rgba(0,0,0,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 13px; }
+
+  /* PRINT */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .no-print { display: none !important; }
+    .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 8px; }
+    .header-bar { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .progress-bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .item-row { break-inside: avoid; }
+    table { page-break-inside: auto; }
+    thead { display: table-header-group; }
+  }
+
+  /* HEADER */
+  .header-bar {
+    background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%);
+    color: white; padding: 24px 32px; position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  }
+  .header-bar h1 { font-size: 18px; font-weight: 700; letter-spacing: .3px; }
+  .header-bar .sub { font-size: 12px; opacity: .85; margin-top: 3px; }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .header-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all .2s; }
+  .btn-print { background: rgba(255,255,255,.2); color: white; border: 1px solid rgba(255,255,255,.4); }
+  .btn-print:hover { background: rgba(255,255,255,.3); }
+  .btn-reset { background: rgba(220,38,38,.7); color: white; }
+  .btn-reset:hover { background: rgba(220,38,38,.9); }
+
+  /* META INFO */
+  .meta-bar { background: white; border-bottom: 1px solid var(--border); padding: 14px 32px; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+  .meta-field label { font-size: 10px; text-transform: uppercase; color: var(--text-light); font-weight: 700; letter-spacing: .5px; display: block; margin-bottom: 4px; }
+  .meta-field input { border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; font-size: 12px; width: 100%; outline: none; color: var(--text); }
+  .meta-field input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(37,99,168,.15); }
+
+  /* PROGRESS */
+  .progress-section { background: white; border-bottom: 3px solid var(--border); padding: 16px 32px; }
+  .progress-row { display: flex; align-items: center; gap: 16px; }
+  .progress-bar { flex: 1; background: #e5e7eb; border-radius: 99px; height: 10px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), #22c55e); border-radius: 99px; transition: width .4s ease; }
+  .progress-stats { display: flex; gap: 20px; flex-shrink: 0; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 22px; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 10px; text-transform: uppercase; color: var(--text-light); margin-top: 2px; font-weight: 600; }
+  .stat-co .stat-num { color: var(--green); }
+  .stat-thieu .stat-num { color: var(--red); }
+  .stat-na .stat-num { color: var(--gray); }
+  .stat-total .stat-num { color: var(--primary); }
+  .progress-pct { font-size: 16px; font-weight: 800; color: var(--green); min-width: 48px; text-align: right; }
+
+  /* CONTENT */
+  .content { max-width: 1200px; margin: 0 auto; padding: 20px 24px; }
+  .card { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
+
+  /* SECTION HEADER */
+  .section-header { display: flex; align-items: center; gap: 12px; padding: 14px 20px; cursor: pointer; user-select: none; }
+  .section-header:hover { filter: brightness(.97); }
+  .section-a .section-header { background: linear-gradient(90deg, #1a4f8a 0%, #2563a8 100%); color: white; }
+  .section-b .section-header { background: linear-gradient(90deg, #059669 0%, #10b981 100%); color: white; }
+  .section-c .section-header { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); color: white; }
+  .section-badge { background: rgba(255,255,255,.25); border-radius: 6px; padding: 4px 10px; font-size: 13px; font-weight: 800; letter-spacing: 1px; }
+  .section-title { font-size: 14px; font-weight: 700; flex: 1; }
+  .section-progress { font-size: 12px; opacity: .9; font-weight: 600; }
+  .toggle-icon { font-size: 16px; transition: transform .3s; }
+  .collapsed .toggle-icon { transform: rotate(-90deg); }
+  .section-body { padding: 0; }
+  .section-body.hidden { display: none; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    background: #f8fafc; padding: 10px 14px; text-align: left;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-light);
+    border-bottom: 2px solid var(--border); letter-spacing: .4px;
+  }
+  .th-stt { width: 52px; text-align: center; }
+  .th-tai-lieu { width: 35%; }
+  .th-trang-thai { width: 160px; text-align: center; }
+  .th-ghi-chu { }
+
+  .item-row td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .item-row:last-child td { border-bottom: none; }
+  .item-row:hover td { background: #fafbff; }
+  .item-row.sub-row td { padding-left: 32px; }
+  .item-row.sub-row .stt-cell { padding-left: 14px; }
+  .item-row.group-row td { background: #f1f5f9; }
+  .item-row.group-row .doc-name { font-weight: 700; color: var(--primary); }
+
+  .stt-cell { text-align: center; font-weight: 700; color: var(--text-light); font-size: 12px; }
+  .doc-name { font-size: 13px; font-weight: 500; line-height: 1.5; color: var(--text); }
+  .doc-name small { display: block; font-size: 11px; color: var(--text-light); margin-top: 3px; font-weight: 400; font-style: italic; }
+
+  /* STATUS BUTTONS */
+  .status-group { display: flex; gap: 4px; justify-content: center; }
+  .status-btn {
+    border: 2px solid transparent; border-radius: 6px; padding: 5px 10px;
+    cursor: pointer; font-size: 11px; font-weight: 700; background: #f1f5f9;
+    color: #94a3b8; transition: all .15s; white-space: nowrap;
+  }
+  .status-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
+  .status-btn.active-co { background: #dcfce7; color: var(--green); border-color: var(--green); }
+  .status-btn.active-thieu { background: #fee2e2; color: var(--red); border-color: var(--red); }
+  .status-btn.active-na { background: #f3f4f6; color: #6b7280; border-color: #9ca3af; }
+
+  /* NOTE INPUT */
+  .note-input { width: 100%; border: 1px solid var(--border); border-radius: 5px; padding: 5px 8px; font-size: 12px; resize: none; font-family: inherit; color: var(--text); outline: none; min-height: 32px; }
+  .note-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(37,99,168,.12); }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 16px; align-items: center; padding: 12px 20px; background: #fafafa; border-top: 1px solid var(--border); }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-light); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+  .ld-co { background: #dcfce7; border: 1px solid var(--green); }
+  .ld-thieu { background: #fee2e2; border: 1px solid var(--red); }
+  .ld-na { background: #f3f4f6; border: 1px solid #9ca3af; }
+
+  /* SIGNATURE */
+  .signature-section { background: white; border-radius: 10px; box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px; }
+  .signature-section h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+  .sig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .sig-box { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; min-height: 100px; }
+  .sig-box .sig-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: .5px; margin-bottom: 4px; }
+  .sig-box .sig-role { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 60px; }
+  .sig-box .sig-line { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 8px; font-size: 11px; color: var(--text-light); }
+
+  .date-footer { text-align: center; color: var(--text-light); font-size: 11px; margin: 16px 0; }
+  #print-date { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header-bar no-print">
+  <div class="header-top">
+    <div>
+      <h1>☑ CHECKLIST HỒ SƠ HOÀN THÀNH CÔNG TRÌNH XÂY DỰNG</h1>
+      <div class="sub">Công cụ kiểm tra danh mục tài liệu phục vụ công tác thanh tra, kiểm tra</div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-print" onclick="window.print()">🖨 In / PDF</button>
+      <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
+    </div>
+  </div>
+</div>
+
+<!-- Printable header -->
+<div style="display:none" class="print-header">
+  <div style="text-align:center;padding:16px 0 8px">
+    <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px">DANH MỤC KIỂM TRA HỒ SƠ HOÀN THÀNH CÔNG TRÌNH XÂY DỰNG</div>
+  </div>
+</div>
+<style>@media print { .print-header { display:block !important; } }</style>
+
+<!-- META -->
+<div class="meta-bar no-print">
+  <div class="meta-field">
+    <label>Tên công trình</label>
+    <input type="text" id="cong-trinh" placeholder="Nhập tên công trình..." oninput="saveState()">
+  </div>
+  <div class="meta-field">
+    <label>Địa điểm xây dựng</label>
+    <input type="text" id="dia-diem" placeholder="Xã/phường, huyện/TP..." oninput="saveState()">
+  </div>
+  <div class="meta-field">
+    <label>Ngày kiểm tra</label>
+    <input type="date" id="ngay-kiem-tra" oninput="saveState()">
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section no-print">
+  <div class="progress-row">
+    <div style="flex:1">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:12px;font-weight:700;color:var(--text-light)">TIẾN ĐỘ KIỂM TRA</span>
+        <span class="progress-pct" id="pct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+    <div class="progress-stats">
+      <div class="stat stat-co"><div class="stat-num" id="cnt-co">0</div><div class="stat-label">✓ Có đủ</div></div>
+      <div class="stat stat-thieu"><div class="stat-num" id="cnt-thieu">0</div><div class="stat-label">✗ Thiếu</div></div>
+      <div class="stat stat-na"><div class="stat-num" id="cnt-na">0</div><div class="stat-label">— K.áp dụng</div></div>
+      <div class="stat stat-total"><div class="stat-num" id="cnt-total">0</div><div class="stat-label">Tổng mục</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- SECTION A -->
+<div class="card section-a" id="sec-a">
+  <div class="section-header" onclick="toggleSection('sec-a')">
+    <div class="section-badge">A</div>
+    <div class="section-title">HỒ SƠ CHUẨN BỊ ĐẦU TƯ XÂY DỰNG VÀ HỢP ĐỒNG</div>
+    <div class="section-progress" id="prog-a">0/14 mục</div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body" id="body-sec-a">
+    <table>
+      <thead><tr>
+        <th class="th-stt">STT</th>
+        <th class="th-tai-lieu">Tài liệu cần kiểm tra</th>
+        <th class="th-trang-thai">Trạng thái</th>
+        <th class="th-ghi-chu">Ghi chú / Số hiệu văn bản</th>
+      </tr></thead>
+      <tbody id="tbody-a"></tbody>
+    </table>
+    <div class="legend">
+      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
+      <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
+      <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION B -->
+<div class="card section-b" id="sec-b">
+  <div class="section-header" onclick="toggleSection('sec-b')">
+    <div class="section-badge">B</div>
+    <div class="section-title">HỒ SƠ KHẢO SÁT XÂY DỰNG, THIẾT KẾ XÂY DỰNG CÔNG TRÌNH</div>
+    <div class="section-progress" id="prog-b">0/4 mục</div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body" id="body-sec-b">
+    <table>
+      <thead><tr>
+        <th class="th-stt">STT</th>
+        <th class="th-tai-lieu">Tài liệu cần kiểm tra</th>
+        <th class="th-trang-thai">Trạng thái</th>
+        <th class="th-ghi-chu">Ghi chú / Số hiệu văn bản</th>
+      </tr></thead>
+      <tbody id="tbody-b"></tbody>
+    </table>
+    <div class="legend">
+      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
+      <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
+      <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION C -->
+<div class="card section-c" id="sec-c">
+  <div class="section-header" onclick="toggleSection('sec-c')">
+    <div class="section-badge">C</div>
+    <div class="section-title">HỒ SƠ QUẢN LÝ CHẤT LƯỢNG THI CÔNG XÂY DỰNG</div>
+    <div class="section-progress" id="prog-c">0/8 mục</div>
+    <span class="toggle-icon">▾</span>
+  </div>
+  <div class="section-body" id="body-sec-c">
+    <table>
+      <thead><tr>
+        <th class="th-stt">STT</th>
+        <th class="th-tai-lieu">Tài liệu cần kiểm tra</th>
+        <th class="th-trang-thai">Trạng thái</th>
+        <th class="th-ghi-chu">Ghi chú / Số hiệu văn bản</th>
+      </tr></thead>
+      <tbody id="tbody-c"></tbody>
+    </table>
+    <div class="legend">
+      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
+      <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
+      <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNATURE -->
+<div class="signature-section">
+  <h3>KÝ XÁC NHẬN</h3>
+  <div class="sig-grid">
+    <div class="sig-box">
+      <div class="sig-title">Đại diện</div>
+      <div class="sig-role">Chủ đầu tư</div>
+      <div class="sig-line"><em>(Ký, đóng dấu, ghi rõ họ tên)</em></div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-title">Đại diện</div>
+      <div class="sig-role">Tư vấn quản lý dự án</div>
+      <div class="sig-line"><em>(Ký, đóng dấu, ghi rõ họ tên)</em></div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-title">Đại diện</div>
+      <div class="sig-role">Tư vấn giám sát</div>
+      <div class="sig-line"><em>(Ký, đóng dấu, ghi rõ họ tên)</em></div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-title">Đại diện</div>
+      <div class="sig-role">Nhà thầu thi công</div>
+      <div class="sig-line"><em>(Ký, đóng dấu, ghi rõ họ tên)</em></div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-title">Đoàn thanh tra</div>
+      <div class="sig-role">Thành viên đoàn</div>
+      <div class="sig-line"><em>(Ký, ghi rõ họ tên)</em></div>
+    </div>
+    <div class="sig-box">
+      <div class="sig-title">Đoàn thanh tra</div>
+      <div class="sig-role">Trưởng đoàn / Tổ trưởng</div>
+      <div class="sig-line"><em>(Ký, ghi rõ họ tên, chức vụ)</em></div>
+    </div>
+  </div>
+  <div class="date-footer">Ngày kiểm tra: <span id="print-date">……/……/…………</span></div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+const DATA = {
+  a: [
+    { stt: '1', name: 'Quyết định phê duyệt chủ trương đầu tư xây dựng', note: 'Nghị quyết HĐND hoặc Quyết định cấp có thẩm quyền phê duyệt chủ trương đầu tư dự án', group: false },
+    { stt: '2', name: 'Quyết định phê duyệt dự án đầu tư xây dựng công trình', note: 'Quyết định phê duyệt dự án của UBND tỉnh hoặc cấp có thẩm quyền', group: false },
+    { stt: '3', name: 'Nhiệm vụ thiết kế; các văn bản thẩm định, tham gia ý kiến của các cơ quan liên quan trong việc thẩm định dự án và thiết kế cơ sở', note: 'Gồm: Nhiệm vụ thiết kế được phê duyệt; Văn bản thông báo kết quả thẩm định BCNCKT; Văn bản góp ý PCCC về TKCS; Hồ sơ BCNCKT, TKCS đã được phê duyệt', group: false },
+    { stt: '4', name: 'Văn bản của cơ quan nhà nước có thẩm quyền về: thỏa thuận quy hoạch, chấp thuận đấu nối, đánh giá tác động môi trường, bảo đảm an toàn và các văn bản liên quan khác', note: 'Thông báo chấp thuận tổng mặt bằng; Thông báo chấp thuận phương án kiến trúc; Văn bản về môi trường, an toàn giao thông (nếu có)', group: false },
+    { stt: '5', name: 'Giấy tờ về quyền sử dụng đất; phương án đền bù giải phóng mặt bằng', note: 'Giấy chứng nhận QSDĐ; Quyết định cấp GCN QSDĐ; Trích lục bản đồ địa chính; Phương án đền bù GPMB (nếu có)', group: false },
+    { stt: '6', name: 'Giấy phép xây dựng (hoặc văn bản xác nhận trường hợp được miễn giấy phép xây dựng)', note: 'Trường hợp miễn GPXD: nêu rõ căn cứ pháp lý theo Luật Xây dựng và văn bản liên quan', group: false },
+    { stt: '7', name: 'Quyết định chỉ định thầu/phê duyệt kết quả lựa chọn nhà thầu; hợp đồng xây dựng; tài liệu chứng minh năng lực các nhà thầu', note: 'Bao gồm các gói thầu tư vấn và thi công', group: true },
+    { stt: '7.1', name: 'Tư vấn khảo sát địa chất', note: 'QĐ chỉ định thầu; Biên bản thương thảo; Hợp đồng; Phụ lục HĐ; Thanh lý HĐ; Hồ sơ năng lực đơn vị và cán bộ thực hiện', group: false, sub: true },
+    { stt: '7.2', name: 'Tư vấn giám sát khảo sát địa chất và thí nghiệm nén tĩnh cọc BTCT', note: 'QĐ chỉ định thầu; Biên bản thương thảo; Hợp đồng; BB nghiệm thu; Thanh lý HĐ; Hồ sơ năng lực PTN, cán bộ TNo', group: false, sub: true },
+    { stt: '7.3', name: 'Tư vấn lập Báo cáo NCKT, thiết kế BVTC và dự toán công trình', note: 'QĐ chỉ định/phê duyệt; Hợp đồng, phụ lục; BB nghiệm thu; Thanh lý; Hồ sơ năng lực HĐXD; Chứng chỉ HÀNH nghề của các chủ trì', group: false, sub: true },
+    { stt: '7.4', name: 'Tư vấn thẩm tra thiết kế và dự toán công trình', note: 'QĐ chỉ định; Hợp đồng; BB nghiệm thu; Thanh lý; Năng lực đơn vị và cán bộ thẩm tra', group: false, sub: true },
+    { stt: '7.5', name: 'Tư vấn quản lý dự án', note: 'QĐ phê duyệt KHLCNT; Hợp đồng, phụ lục; QĐ phân công nhiệm vụ cán bộ QLDA; Hồ sơ năng lực đơn vị và từng cán bộ', group: false, sub: true },
+    { stt: '7.6', name: 'Tư vấn giám sát thi công', note: 'QĐ phê duyệt KQLCNT; Thỏa thuận liên danh (nếu có); Hợp đồng, phụ lục; BB nghiệm thu, thanh lý; QĐ thành lập tổ TVGS; Năng lực từng cán bộ giám sát', group: false, sub: true },
+    { stt: '7.7', name: 'Nhà thầu thi công xây dựng', note: 'QĐ phê duyệt KQLCNT; Thỏa thuận liên danh (nếu có); Hợp đồng, các phụ lục; QĐ thành lập BCH công trường; QĐ thành lập ban ATLĐ, VSMT; Hồ sơ năng lực', group: false, sub: true },
+    { stt: '7.8', name: 'Bảo hiểm xây dựng công trình', note: 'QĐ phê duyệt KQLCNT; Hợp đồng bảo hiểm; Giấy chứng nhận bảo hiểm mọi rủi ro XD; Năng lực đơn vị bảo hiểm', group: false, sub: true },
+    { stt: '7.9', name: 'Tư vấn lập HSMT và đánh giá HSDT các gói thầu', note: 'QĐ chỉ định; Hợp đồng; QĐ thành lập tổ chuyên gia; Quy chế làm việc; Báo cáo đánh giá HSĐXKT, HSĐXTC từng gói', group: false, sub: true },
+    { stt: '7.10', name: 'Tư vấn thẩm định HSMT và kết quả lựa chọn nhà thầu', note: 'QĐ chỉ định; Hợp đồng; QĐ thành lập tổ thẩm định; Báo cáo thẩm định HSMT, kết quả đánh giá từng gói thầu', group: false, sub: true },
+    { stt: '7.11', name: 'Thẩm định giá (phục vụ đấu thầu mua sắm)', note: 'QĐ chỉ định; Hợp đồng dịch vụ; Chứng thư thẩm định giá; Báo cáo kết quả; Năng lực đơn vị và thẩm định viên', group: false, sub: true },
+    { stt: '7.11a', name: 'Thẩm định giá (phục vụ đầu tư xây dựng)', note: 'Văn bản đề nghị; BB thương thảo; Hợp đồng; BB nghiệm thu bàn giao; Chứng thư thẩm định giá; Báo cáo kết quả', group: false, sub: true },
+    { stt: '7.12', name: 'Ban quản lý xây dựng công trình của chủ đầu tư', note: 'Quyết định thành lập Ban QLXDCT của CĐT (danh sách cán bộ, giáo viên tham gia)', group: false, sub: true },
+    { stt: '7.13', name: 'Tư vấn kiểm toán', note: 'QĐ chỉ định; BB thương thảo; Hợp đồng kiểm toán; Kế hoạch làm việc; Báo cáo kết quả kiểm toán độc lập; QĐ phân công nhân sự; Năng lực đơn vị và kiểm toán viên', group: false, sub: true },
+    { stt: '7.14', name: 'Thí nghiệm hiện trường (PTN vật liệu và kiểm định xây dựng)', note: 'Hợp đồng thí nghiệm; QĐ thành lập tổ thí nghiệm; GCN đủ điều kiện hoạt động TNo LAS-XD; Danh mục phép thử; Năng lực cán bộ TNo', group: false, sub: true },
+    { stt: '8', name: 'Các hồ sơ, tài liệu khác có liên quan trong giai đoạn chuẩn bị đầu tư xây dựng', note: 'Văn bản về thanh lý tài sản công; Văn bản điều chỉnh giá HĐ; các công văn, văn bản liên quan khác', group: false },
+  ],
+  b: [
+    { stt: '1', name: 'Hồ sơ khảo sát xây dựng công trình', note: 'Gồm: Nhiệm vụ KSĐC; Phương án KSĐC; Báo cáo kết quả KSĐC; Nhật ký KSĐC; Hồ sơ QLCL khảo sát (BB bàn giao MB, BB nghiệm thu thiết bị, BB nghiệm thu thành phần, BB nghiệm thu hoàn thành, BB nghiệm thu kết quả)', group: false },
+    { stt: '2', name: 'Văn bản thông báo chấp thuận nghiệm thu kết quả khảo sát xây dựng', note: 'Biên bản nghiệm thu khối lượng hoàn thành công tác khảo sát địa chất của CĐT', group: false },
+    { stt: '3', name: 'Kết quả thẩm tra, thẩm định thiết kế xây dựng; Quyết định phê duyệt thiết kế; hồ sơ thiết kế đã được phê duyệt (có danh mục bản vẽ); chỉ dẫn kỹ thuật', note: 'Gồm: QĐ phê duyệt TKXD; Thông báo kết quả thẩm định của SXD; Báo cáo kết quả thẩm tra của TVTK; GCN thẩm duyệt thiết kế PCCC; Hồ sơ thẩm định giá; Hồ sơ BVTC, dự toán đã được phê duyệt', group: false },
+    { stt: '3*', name: 'Văn bản thông báo chấp thuận nghiệm thu thiết kế xây dựng công trình', note: 'BB nghiệm thu hoàn thành BCNCKT; BB bàn giao và NT hồ sơ BVTC và dự toán; BB nghiệm thu hoàn thành công tác tư vấn lập TKBVTC', group: false },
+  ],
+  c: [
+    { stt: '1', name: 'Danh mục điều chỉnh, thay đổi thiết kế trong quá trình thi công; các văn bản thẩm định, phê duyệt của cấp có thẩm quyền', note: 'Biên bản hiện trường; Báo cáo kết quả thẩm tra TK-DT điều chỉnh; QĐ phê duyệt điều chỉnh TKBVTC từng đợt; Bản vẽ điều chỉnh', group: false },
+    { stt: '2', name: 'Bản vẽ hoàn công', note: 'Bản vẽ hoàn công do nhà thầu thi công lập, được CĐT – Tư vấn QLDA – TVGS ký xác nhận', group: false },
+    { stt: '3', name: 'Các kế hoạch, biện pháp kiểm tra, kiểm soát chất lượng thi công xây dựng công trình', note: 'Thông báo khởi công; BB bàn giao MB; BB kiểm tra điều kiện khởi công; Đề cương TVGS và QLDA; Biện pháp thi công; Phương án ATLĐ, VSMT, PCCC; Kế hoạch TNo vật liệu; Nhật ký thi công', group: false },
+    { stt: '4', name: 'Chứng từ chứng nhận xuất xứ hàng hóa, nhãn mác; tài liệu công bố tiêu chuẩn áp dụng; chứng hợp quy, hợp chuẩn sản phẩm vật liệu, thiết bị', note: 'GCN hợp quy sản phẩm; GCN chất lượng; Phiếu kết quả thử nghiệm; Phiếu kết quả kiểm tra xuất xưởng; Kết quả TNo cơ lý thép, cường độ nén mẫu bê tông, cấp phối bê tông và vữa', group: false },
+    { stt: '5', name: 'Kết quả quan trắc, đo đạc, thí nghiệm trong quá trình thi công', note: 'Báo cáo kết quả TNo nén tĩnh cọc; BB nghiệm thu máy thiết bị trước khi sử dụng; Hồ sơ lý lịch máy, thiết bị; GCN kiểm định thiết bị ép cọc; GCN hiệu chuẩn thiết bị TNo; Kết quả TNo VLXD trong quá trình thi công', group: false },
+    { stt: '6', name: 'Biên bản nghiệm thu công việc xây dựng, nghiệm thu bộ phận hoặc giai đoạn công trình; biên bản nghiệm thu hoàn thành hạng mục, công trình', note: 'Hệ thống BB nghiệm thu công việc (kèm phiếu đề nghị NT); BB nghiệm thu hoàn thành phần móng; BB NT hoàn thành phần thân; BB NT hoàn thành toàn bộ công trình', group: false },
+    { stt: '7', name: 'Quy trình vận hành, khai thác công trình (nếu có); quy trình bảo trì công trình', note: 'Hồ sơ quy trình bảo trì do đơn vị tư vấn thiết kế lập, được CĐT ký xác nhận', group: false },
+    { stt: '8', name: 'Văn bản thỏa thuận, chấp thuận của cơ quan nhà nước có thẩm quyền: PCCC; môi trường; ATLĐ, an toàn vận hành; thực hiện GPXD; đấu nối hạ tầng kỹ thuật; các văn bản khác theo quy định', note: 'Gồm: Văn bản nghiệm thu PCCC của Cảnh sát PCCC; Báo cáo hoàn thành thi công của CĐT; Báo cáo hoàn thành giám sát của TVGS; Báo cáo hoàn thành của QLDA; Báo cáo giám sát tác giả; Báo cáo ATLĐ, VSLĐ định kỳ; BB kiểm tra ATLĐ của SXD', group: false },
+  ]
+};
+
+const state = {};
+
+function getId(sec, idx) { return `${sec}_${idx}`; }
+
+function buildTable(sec) {
+  const tbody = document.getElementById(`tbody-${sec}`);
+  DATA[sec].forEach((item, idx) => {
+    const id = getId(sec, idx);
+    state[id] = state[id] || { status: null, note: '' };
+    const tr = document.createElement('tr');
+    tr.className = 'item-row' + (item.sub ? ' sub-row' : '') + (item.group ? ' group-row' : '');
+    tr.innerHTML = `
+      <td class="stt-cell">${item.stt}</td>
+      <td><div class="doc-name">${item.name}${item.note ? `<small>${item.note}</small>` : ''}</div></td>
+      <td>
+        ${item.group ? '<div style="text-align:center;color:#94a3b8;font-size:11px;font-style:italic">— xem chi tiết bên dưới —</div>' : `
+        <div class="status-group">
+          <button class="status-btn" onclick="setStatus('${id}','co')" id="btn-co-${id}" title="Có đủ / Đạt">✓ Có</button>
+          <button class="status-btn" onclick="setStatus('${id}','thieu')" id="btn-thieu-${id}" title="Thiếu / Chưa đạt">✗ Thiếu</button>
+          <button class="status-btn" onclick="setStatus('${id}','na')" id="btn-na-${id}" title="Không áp dụng">— K.áp dụng</button>
+        </div>`}
+      </td>
+      <td>${item.group ? '' : `<textarea class="note-input" id="note-${id}" rows="1" placeholder="Số hiệu, ngày tháng, ghi chú..." oninput="setNote('${id}',this.value);autoResize(this)">${state[id].note}</textarea>`}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function setStatus(id, val) {
+  if (state[id].status === val) {
+    state[id].status = null;
+    ['co','thieu','na'].forEach(s => document.getElementById(`btn-${s}-${id}`)?.classList.remove(`active-${s}`));
+  } else {
+    state[id].status = val;
+    ['co','thieu','na'].forEach(s => {
+      const btn = document.getElementById(`btn-${s}-${id}`);
+      if(btn) { btn.classList.toggle(`active-${s}`, s === val); }
+    });
+  }
+  updateProgress();
+  saveState();
+}
+
+function setNote(id, val) {
+  state[id].note = val;
+  saveState();
+}
+
+function updateProgress() {
+  let totalItems = 0, co = 0, thieu = 0, na = 0;
+  Object.keys(state).forEach(id => {
+    const parts = id.split('_');
+    const sec = parts[0];
+    const idx = parseInt(parts[1]);
+    if (DATA[sec] && DATA[sec][idx] && !DATA[sec][idx].group) {
+      totalItems++;
+      const s = state[id].status;
+      if (s === 'co') co++;
+      else if (s === 'thieu') thieu++;
+      else if (s === 'na') na++;
+    }
+  });
+  const checked = co + thieu + na;
+  const pct = totalItems > 0 ? Math.round((checked / totalItems) * 100) : 0;
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('cnt-co').textContent = co;
+  document.getElementById('cnt-thieu').textContent = thieu;
+  document.getElementById('cnt-na').textContent = na;
+  document.getElementById('cnt-total').textContent = totalItems;
+
+  // Section progress
+  ['a','b','c'].forEach(sec => {
+    let tot = 0, done = 0;
+    DATA[sec].forEach((item, idx) => {
+      if (!item.group) { tot++; if (state[getId(sec,idx)].status) done++; }
+    });
+    document.getElementById(`prog-${sec}`).textContent = `${done}/${tot} mục`;
+  });
+}
+
+function toggleSection(id) {
+  const card = document.getElementById(id);
+  const body = document.getElementById(`body-${id}`);
+  card.classList.toggle('collapsed');
+  body.classList.toggle('hidden');
+}
+
+function resetAll() {
+  if (!confirm('Reset toàn bộ trạng thái kiểm tra?')) return;
+  Object.keys(state).forEach(id => { state[id] = { status: null, note: '' }; });
+  ['a','b','c'].forEach(sec => {
+    document.querySelectorAll(`#tbody-${sec} .status-btn`).forEach(btn => {
+      btn.className = 'status-btn';
+    });
+    document.querySelectorAll(`#tbody-${sec} .note-input`).forEach(el => { el.value = ''; });
+  });
+  updateProgress();
+  saveState();
+}
+
+function saveState() {
+  try {
+    const save = {
+      ct: document.getElementById('cong-trinh')?.value,
+      dd: document.getElementById('dia-diem')?.value,
+      nkt: document.getElementById('ngay-kiem-tra')?.value,
+      state
+    };
+    localStorage.setItem('checklist_hshttct', JSON.stringify(save));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('checklist_hshttct');
+    if (!raw) return;
+    const save = JSON.parse(raw);
+    if (save.ct) document.getElementById('cong-trinh').value = save.ct;
+    if (save.dd) document.getElementById('dia-diem').value = save.dd;
+    if (save.nkt) document.getElementById('ngay-kiem-tra').value = save.nkt;
+    if (save.state) {
+      Object.keys(save.state).forEach(id => {
+        if (state[id] !== undefined) {
+          state[id] = save.state[id];
+          if (state[id].status) {
+            const s = state[id].status;
+            const btn = document.getElementById(`btn-${s}-${id}`);
+            if (btn) btn.classList.add(`active-${s}`);
+          }
+          const noteEl = document.getElementById(`note-${id}`);
+          if (noteEl && state[id].note) { noteEl.value = state[id].note; autoResize(noteEl); }
+        }
+      });
+    }
+  } catch(e) {}
+}
+
+// Update print date
+function updatePrintDate() {
+  const inp = document.getElementById('ngay-kiem-tra');
+  const el = document.getElementById('print-date');
+  if (inp && inp.value) {
+    const d = new Date(inp.value);
+    el.textContent = `ngày ${d.getDate()} tháng ${d.getMonth()+1} năm ${d.getFullYear()}`;
+  }
+}
+document.getElementById('ngay-kiem-tra')?.addEventListener('change', updatePrintDate);
+
+// Init
+buildTable('a');
+buildTable('b');
+buildTable('c');
+loadState();
+updateProgress();
+
+// Set default date
+const dtInput = document.getElementById('ngay-kiem-tra');
+if (dtInput && !dtInput.value) {
+  const today = new Date();
+  dtInput.value = today.toISOString().split('T')[0];
+  updatePrintDate();
+}
+</script>
+</body>
+</html>

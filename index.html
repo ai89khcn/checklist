@@ -26,16 +26,43 @@
   body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; }
 
   /* PRINT */
+  @page {
+    size: A4 landscape;
+    margin: 1.2cm 1cm;
+  }
   @media print {
-    body { background: white; font-size: 11px; }
+    body { background: white; font-size: 10px; }
     .no-print { display: none !important; }
     .card { box-shadow: none; border: 1px solid #ccc; margin-bottom: 8px; }
     .header-bar { background: var(--primary) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .section-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .progress-bar-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .item-row { break-inside: avoid; }
-    table { page-break-inside: auto; }
+    table { page-break-inside: auto; width: 100%; }
     thead { display: table-header-group; }
+    /* Show full note text when printing */
+    .note-input {
+      border: none !important;
+      padding: 0 !important;
+      font-size: 10px !important;
+      min-height: unset !important;
+      height: auto !important;
+      overflow: visible !important;
+      resize: none;
+      background: transparent;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    /* Status buttons smaller in print */
+    .status-btn { padding: 3px 6px !important; font-size: 9px !important; }
+    .doc-name { font-size: 10px !important; line-height: 1.4 !important; }
+    .doc-name small { font-size: 9px !important; }
+    .section-title { font-size: 11px !important; }
+    .section-badge { font-size: 11px !important; }
+    .stt-cell { font-size: 10px !important; }
+    thead th { font-size: 9px !important; padding: 6px 8px !important; }
+    .item-row td { padding: 6px 8px !important; }
+    .content { padding: 0 !important; max-width: 100% !important; }
   }
 
   /* HEADER */
@@ -1077,6 +1104,29 @@ function copyReport() {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
 })();
+
+
+// Convert textareas to divs for print (so text shows fully)
+window.addEventListener('beforeprint', function() {
+  document.querySelectorAll('.note-input').forEach(function(ta) {
+    var div = document.createElement('div');
+    div.className = 'note-input note-print-div';
+    div.style.cssText = 'border:none;padding:0;font-size:10px;line-height:1.5;white-space:pre-wrap;word-break:break-word;min-height:unset;background:transparent;font-family:inherit;';
+    div.textContent = ta.value || '';
+    ta.parentNode.insertBefore(div, ta);
+    ta.style.display = 'none';
+    ta._printDiv = div;
+  });
+});
+window.addEventListener('afterprint', function() {
+  document.querySelectorAll('.note-input').forEach(function(ta) {
+    if (ta._printDiv) {
+      ta._printDiv.remove();
+      ta._printDiv = null;
+      ta.style.display = '';
+    }
+  });
+});
 
 </script>
 

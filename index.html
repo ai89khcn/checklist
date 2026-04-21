@@ -23,7 +23,7 @@
     --shadow: 0 2px 8px rgba(0,0,0,.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 13px; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; }
 
   /* PRINT */
   @media print {
@@ -41,42 +41,47 @@
   /* HEADER */
   .header-bar {
     background: linear-gradient(135deg, var(--primary) 0%, #0f3460 100%);
-    color: white; padding: 24px 32px; position: sticky; top: 0; z-index: 100;
+    color: white; padding: 14px 32px; position: sticky; top: 0; z-index: 100;
     box-shadow: 0 4px 20px rgba(0,0,0,.2);
   }
-  .header-bar h1 { font-size: 18px; font-weight: 700; letter-spacing: .3px; }
-  .header-bar .sub { font-size: 12px; opacity: .85; margin-top: 3px; }
-  .header-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .header-bar h1 { font-size: 16px; font-weight: 700; letter-spacing: .3px; white-space: nowrap; }
+  .header-bar .sub { font-size: 12px; opacity: .75; margin-top: 2px; white-space: nowrap; }
+  .header-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
   .header-actions { display: flex; gap: 8px; flex-shrink: 0; }
-  .btn { padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; transition: all .2s; }
+  .btn { padding: 9px 18px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; transition: all .2s; }
   .btn-print { background: rgba(255,255,255,.2); color: white; border: 1px solid rgba(255,255,255,.4); }
   .btn-print:hover { background: rgba(255,255,255,.3); }
   .btn-reset { background: rgba(220,38,38,.7); color: white; }
   .btn-reset:hover { background: rgba(220,38,38,.9); }
+  .btn-filter { background: rgba(245,158,11,.85); color: white; border: 1px solid rgba(245,158,11,.5); }
+  .btn-filter:hover { background: rgba(245,158,11,1); }
+  .btn-filter.active { background: #f59e0b; box-shadow: 0 0 0 2px rgba(255,255,255,.5); }
+  .btn-export { background: rgba(16,185,129,.85); color: white; border: 1px solid rgba(16,185,129,.5); }
+  .btn-export:hover { background: rgba(16,185,129,1); }
 
   /* META INFO */
-  .meta-bar { background: white; border-bottom: 1px solid var(--border); padding: 14px 32px; display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-  .meta-field label { font-size: 10px; text-transform: uppercase; color: var(--text-light); font-weight: 700; letter-spacing: .5px; display: block; margin-bottom: 4px; }
-  .meta-field input { border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; font-size: 12px; width: 100%; outline: none; color: var(--text); }
+  .meta-bar { background: white; border-bottom: 1px solid var(--border); padding: 14px 32px; display: grid; grid-template-columns: 2fr 1.3fr 0.7fr; gap: 16px; align-items: end; }
+  .meta-field label { font-size: 11px; text-transform: uppercase; color: var(--text-light); font-weight: 700; letter-spacing: .5px; display: block; margin-bottom: 4px; }
+  .meta-field input { border: 1px solid var(--border); border-radius: 5px; padding: 8px 12px; font-size: 14px; width: 100%; outline: none; color: var(--text); }
   .meta-field input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(37,99,168,.15); }
 
   /* PROGRESS */
-  .progress-section { background: white; border-bottom: 3px solid var(--border); padding: 16px 32px; }
+  .progress-section { background: white; border-bottom: 3px solid var(--border); padding: 16px 32px; position: sticky; top: 62px; z-index: 90; box-shadow: 0 4px 12px rgba(0,0,0,.08); }
   .progress-row { display: flex; align-items: center; gap: 16px; }
   .progress-bar { flex: 1; background: #e5e7eb; border-radius: 99px; height: 10px; overflow: hidden; }
   .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--green), #22c55e); border-radius: 99px; transition: width .4s ease; }
   .progress-stats { display: flex; gap: 20px; flex-shrink: 0; }
   .stat { text-align: center; }
-  .stat-num { font-size: 22px; font-weight: 800; line-height: 1; }
-  .stat-label { font-size: 10px; text-transform: uppercase; color: var(--text-light); margin-top: 2px; font-weight: 600; }
+  .stat-num { font-size: 26px; font-weight: 800; line-height: 1; }
+  .stat-label { font-size: 11px; text-transform: uppercase; color: var(--text-light); margin-top: 2px; font-weight: 600; }
   .stat-co .stat-num { color: var(--green); }
   .stat-thieu .stat-num { color: var(--red); }
   .stat-na .stat-num { color: var(--gray); }
   .stat-total .stat-num { color: var(--primary); }
-  .progress-pct { font-size: 16px; font-weight: 800; color: var(--green); min-width: 48px; text-align: right; }
+  .progress-pct { font-size: 18px; font-weight: 800; color: var(--green); min-width: 52px; text-align: right; }
 
   /* CONTENT */
-  .content { max-width: 1200px; margin: 0 auto; padding: 20px 24px; }
+  .content { max-width: 1400px; margin: 0 auto; padding: 20px 24px; }
   .card { background: var(--card); border-radius: 10px; box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; }
 
   /* SECTION HEADER */
@@ -86,8 +91,8 @@
   .section-b .section-header { background: linear-gradient(90deg, #059669 0%, #10b981 100%); color: white; }
   .section-c .section-header { background: linear-gradient(90deg, #7c3aed 0%, #9333ea 100%); color: white; }
   .section-badge { background: rgba(255,255,255,.25); border-radius: 6px; padding: 4px 10px; font-size: 13px; font-weight: 800; letter-spacing: 1px; }
-  .section-title { font-size: 14px; font-weight: 700; flex: 1; }
-  .section-progress { font-size: 12px; opacity: .9; font-weight: 600; }
+  .section-title { font-size: 16px; font-weight: 700; flex: 1; }
+  .section-progress { font-size: 14px; opacity: .9; font-weight: 600; }
   .toggle-icon { font-size: 16px; transition: transform .3s; }
   .collapsed .toggle-icon { transform: rotate(-90deg); }
   .section-body { padding: 0; }
@@ -96,8 +101,8 @@
   /* TABLE */
   table { width: 100%; border-collapse: collapse; }
   thead th {
-    background: #f8fafc; padding: 10px 14px; text-align: left;
-    font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-light);
+    background: #f8fafc; padding: 12px 16px; text-align: left;
+    font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--text-light);
     border-bottom: 2px solid var(--border); letter-spacing: .4px;
   }
   .th-stt { width: 52px; text-align: center; }
@@ -105,7 +110,7 @@
   .th-trang-thai { width: 160px; text-align: center; }
   .th-ghi-chu { }
 
-  .item-row td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .item-row td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
   .item-row:last-child td { border-bottom: none; }
   .item-row:hover td { background: #fafbff; }
   .item-row.sub-row td { padding-left: 32px; }
@@ -113,15 +118,15 @@
   .item-row.group-row td { background: #f1f5f9; }
   .item-row.group-row .doc-name { font-weight: 700; color: var(--primary); }
 
-  .stt-cell { text-align: center; font-weight: 700; color: var(--text-light); font-size: 12px; }
-  .doc-name { font-size: 13px; font-weight: 500; line-height: 1.5; color: var(--text); }
-  .doc-name small { display: block; font-size: 11px; color: var(--text-light); margin-top: 3px; font-weight: 400; font-style: italic; }
+  .stt-cell { text-align: center; font-weight: 700; color: var(--text-light); font-size: 14px; }
+  .doc-name { font-size: 15px; font-weight: 500; line-height: 1.6; color: var(--text); }
+  .doc-name small { display: block; font-size: 13px; color: var(--text-light); margin-top: 3px; font-weight: 400; font-style: italic; }
 
   /* STATUS BUTTONS */
   .status-group { display: flex; gap: 4px; justify-content: center; }
   .status-btn {
-    border: 2px solid transparent; border-radius: 6px; padding: 5px 10px;
-    cursor: pointer; font-size: 11px; font-weight: 700; background: #f1f5f9;
+    border: 2px solid transparent; border-radius: 6px; padding: 7px 12px;
+    cursor: pointer; font-size: 13px; font-weight: 700; background: #f1f5f9;
     color: #94a3b8; transition: all .15s; white-space: nowrap;
   }
   .status-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 6px rgba(0,0,0,.12); }
@@ -130,12 +135,12 @@
   .status-btn.active-na { background: #f3f4f6; color: #6b7280; border-color: #9ca3af; }
 
   /* NOTE INPUT */
-  .note-input { width: 100%; border: 1px solid var(--border); border-radius: 5px; padding: 5px 8px; font-size: 12px; resize: none; font-family: inherit; color: var(--text); outline: none; min-height: 32px; }
+  .note-input { width: 100%; border: 1px solid var(--border); border-radius: 5px; padding: 6px 10px; font-size: 14px; resize: none; font-family: inherit; color: var(--text); outline: none; min-height: 32px; }
   .note-input:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(37,99,168,.12); }
 
   /* LEGEND */
   .legend { display: flex; gap: 16px; align-items: center; padding: 12px 20px; background: #fafafa; border-top: 1px solid var(--border); }
-  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-light); }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-light); }
   .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
   .ld-co { background: #dcfce7; border: 1px solid var(--green); }
   .ld-thieu { background: #fee2e2; border: 1px solid var(--red); }
@@ -143,20 +148,66 @@
 
   /* SIGNATURE */
   .signature-section { background: white; border-radius: 10px; box-shadow: var(--shadow); padding: 24px; margin-bottom: 20px; }
-  .signature-section h3 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+  .signature-section h3 { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 16px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
   .sig-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .sig-box { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; min-height: 100px; }
-  .sig-box .sig-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: .5px; margin-bottom: 4px; }
-  .sig-box .sig-role { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 60px; }
-  .sig-box .sig-line { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 8px; font-size: 11px; color: var(--text-light); }
+  .sig-box .sig-title { font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--text-light); letter-spacing: .5px; margin-bottom: 4px; }
+  .sig-box .sig-role { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 60px; }
+  .sig-box .sig-line { border-top: 1px solid var(--border); margin-top: 8px; padding-top: 8px; font-size: 13px; color: var(--text-light); }
 
-  .date-footer { text-align: center; color: var(--text-light); font-size: 11px; margin: 16px 0; }
+  .date-footer { text-align: center; color: var(--text-light); font-size: 13px; margin: 16px 0; }
+  .created-by { text-align: center; color: var(--text-light); font-size: 13px; padding: 12px 0 28px; }
+  .created-by a { color: var(--primary); text-decoration: none; font-weight: 700; }
+  .created-by a:hover { text-decoration: underline; }
   #print-date { font-weight: 600; }
+  .item-row.filtered-hidden { display: none; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:12px; width:90%; max-width:800px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,.3); overflow:hidden; }
+  .modal-header { background:linear-gradient(135deg,#1a4f8a,#0f3460); color:white; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+  .modal-header h2 { font-size:16px; font-weight:700; }
+  .modal-close { background:rgba(255,255,255,.2); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:20px; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover { background:rgba(255,255,255,.35); }
+  .modal-body { padding:20px 24px; overflow-y:auto; flex:1; }
+  .modal-footer { padding:12px 24px; border-top:1px solid #e2e8f0; display:flex; gap:10px; justify-content:flex-end; flex-shrink:0; background:#f8fafc; }
+  .report-meta { background:#eff6ff; border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:14px; line-height:2; color:#1e293b; border-left:4px solid #1a4f8a; }
+  .report-meta strong { color:#1a4f8a; }
+  .report-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  .sum-card { border-radius:8px; padding:12px; text-align:center; }
+  .sum-card .num { font-size:28px; font-weight:800; }
+  .sum-card .lbl { font-size:11px; font-weight:700; text-transform:uppercase; margin-top:3px; }
+  .sum-co { background:#dcfce7; color:#16a34a; }
+  .sum-thieu { background:#fee2e2; color:#dc2626; }
+  .sum-na { background:#f3f4f6; color:#6b7280; }
+  .sum-chua { background:#dbeafe; color:#1a4f8a; }
+  .report-section { margin-bottom:14px; }
+  .report-section h3 { font-size:13px; font-weight:700; margin-bottom:6px; padding:8px 14px; border-radius:6px; color:white; }
+  .h3-thieu { background:#dc2626; }
+  .h3-chua { background:#f59e0b; }
+  .report-item { font-size:13px; padding:8px 14px; border-bottom:1px solid #f1f5f9; line-height:1.5; display:flex; gap:10px; align-items:flex-start; }
+  .report-item:last-child { border-bottom:none; }
+  .report-item .ri-stt { color:#64748b; font-weight:700; min-width:44px; font-size:12px; padding-top:1px; }
+  .report-item .ri-name { flex:1; }
+  .report-item.ri-thieu { background:#fff5f5; }
+  .report-item.ri-chua { background:#fffbeb; }
+  .report-textarea { width:100%; height:240px; font-family:'Times New Roman',serif; font-size:13px; border:1px solid #e2e8f0; border-radius:6px; padding:14px; resize:vertical; line-height:1.8; color:#1e293b; outline:none; }
+  .report-textarea:focus { border-color:#1a4f8a; }
+  .tab-bar { display:flex; gap:0; margin-bottom:14px; border-bottom:2px solid #e2e8f0; }
+  .tab-btn { padding:9px 20px; border:none; background:none; cursor:pointer; font-size:14px; font-weight:600; color:#64748b; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .15s; }
+  .tab-btn.active { color:#1a4f8a; border-bottom-color:#1a4f8a; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+  .btn-copy { background:#1a4f8a; color:white; padding:9px 20px; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:600; transition:all .2s; }
+  .btn-copy:hover { background:#2563a8; }
+  .btn-copy.copied { background:#16a34a; }
+  .btn-modal-close { background:#f1f5f9; color:#1e293b; padding:9px 20px; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:600; }
+  .btn-modal-close:hover { background:#e2e8f0; }
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
+<div class="topbar no-print" style="background:#0f3460;text-align:center;padding:6px;font-size:12px;color:rgba(255,255,255,.7);">✦ Powered by <a href="https://dtt.ilaw.vn" target="_blank" style="color:#f59e0b;font-weight:700;text-decoration:none;">dtt.ilaw.vn</a> ✦</div>
 <div class="header-bar no-print">
   <div class="header-top">
     <div>
@@ -164,6 +215,8 @@
       <div class="sub">Công cụ kiểm tra danh mục tài liệu phục vụ công tác thanh tra, kiểm tra</div>
     </div>
     <div class="header-actions">
+      <button class="btn btn-filter" id="btn-filter" onclick="toggleFilter()">🔍 Lọc mục thiếu</button>
+      <button class="btn btn-export" onclick="showReport()">📋 Xuất báo cáo</button>
       <button class="btn btn-print" onclick="window.print()">🖨 In / PDF</button>
       <button class="btn btn-reset" onclick="resetAll()">↺ Reset</button>
     </div>
@@ -176,21 +229,63 @@
     <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px">DANH MỤC KIỂM TRA HỒ SƠ HOÀN THÀNH CÔNG TRÌNH XÂY DỰNG</div>
   </div>
 </div>
-<style>@media print { .print-header { display:block !important; } }</style>
+<style>@media print { .print-header { display:block !important; } }  .item-row.filtered-hidden { display: none; }
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:1000; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:white; border-radius:12px; width:90%; max-width:800px; max-height:88vh; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,.3); overflow:hidden; }
+  .modal-header { background:linear-gradient(135deg,#1a4f8a,#0f3460); color:white; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+  .modal-header h2 { font-size:16px; font-weight:700; }
+  .modal-close { background:rgba(255,255,255,.2); border:none; color:white; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:20px; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .modal-close:hover { background:rgba(255,255,255,.35); }
+  .modal-body { padding:20px 24px; overflow-y:auto; flex:1; }
+  .modal-footer { padding:12px 24px; border-top:1px solid #e2e8f0; display:flex; gap:10px; justify-content:flex-end; flex-shrink:0; background:#f8fafc; }
+  .report-meta { background:#eff6ff; border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:14px; line-height:2; color:#1e293b; border-left:4px solid #1a4f8a; }
+  .report-meta strong { color:#1a4f8a; }
+  .report-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:16px; }
+  .sum-card { border-radius:8px; padding:12px; text-align:center; }
+  .sum-card .num { font-size:28px; font-weight:800; }
+  .sum-card .lbl { font-size:11px; font-weight:700; text-transform:uppercase; margin-top:3px; }
+  .sum-co { background:#dcfce7; color:#16a34a; }
+  .sum-thieu { background:#fee2e2; color:#dc2626; }
+  .sum-na { background:#f3f4f6; color:#6b7280; }
+  .sum-chua { background:#dbeafe; color:#1a4f8a; }
+  .report-section { margin-bottom:14px; }
+  .report-section h3 { font-size:13px; font-weight:700; margin-bottom:6px; padding:8px 14px; border-radius:6px; color:white; }
+  .h3-thieu { background:#dc2626; }
+  .h3-chua { background:#f59e0b; }
+  .report-item { font-size:13px; padding:8px 14px; border-bottom:1px solid #f1f5f9; line-height:1.5; display:flex; gap:10px; align-items:flex-start; }
+  .report-item:last-child { border-bottom:none; }
+  .report-item .ri-stt { color:#64748b; font-weight:700; min-width:44px; font-size:12px; padding-top:1px; }
+  .report-item .ri-name { flex:1; }
+  .report-item.ri-thieu { background:#fff5f5; }
+  .report-item.ri-chua { background:#fffbeb; }
+  .report-textarea { width:100%; height:240px; font-family:'Times New Roman',serif; font-size:13px; border:1px solid #e2e8f0; border-radius:6px; padding:14px; resize:vertical; line-height:1.8; color:#1e293b; outline:none; }
+  .report-textarea:focus { border-color:#1a4f8a; }
+  .tab-bar { display:flex; gap:0; margin-bottom:14px; border-bottom:2px solid #e2e8f0; }
+  .tab-btn { padding:9px 20px; border:none; background:none; cursor:pointer; font-size:14px; font-weight:600; color:#64748b; border-bottom:3px solid transparent; margin-bottom:-2px; transition:all .15s; }
+  .tab-btn.active { color:#1a4f8a; border-bottom-color:#1a4f8a; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+  .btn-copy { background:#1a4f8a; color:white; padding:9px 20px; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:600; transition:all .2s; }
+  .btn-copy:hover { background:#2563a8; }
+  .btn-copy.copied { background:#16a34a; }
+  .btn-modal-close { background:#f1f5f9; color:#1e293b; padding:9px 20px; border:none; border-radius:6px; cursor:pointer; font-size:14px; font-weight:600; }
+  .btn-modal-close:hover { background:#e2e8f0; }
+</style>
 
 <!-- META -->
 <div class="meta-bar no-print">
   <div class="meta-field">
     <label>Tên công trình</label>
-    <input type="text" id="cong-trinh" placeholder="Nhập tên công trình..." oninput="saveState()">
+    <input type="text" id="cong-trinh" placeholder="Nhập tên công trình..." oninput="saveState()" style="font-size:18px;font-weight:700;padding:10px 14px;border-width:2px;color:#1a4f8a;">
   </div>
   <div class="meta-field">
     <label>Địa điểm xây dựng</label>
-    <input type="text" id="dia-diem" placeholder="Xã/phường, huyện/TP..." oninput="saveState()">
+    <input type="text" id="dia-diem" placeholder="Xã/phường, huyện/TP..." value="Xã Xuân Trúc" oninput="saveState()">
   </div>
   <div class="meta-field">
     <label>Ngày kiểm tra</label>
-    <input type="date" id="ngay-kiem-tra" oninput="saveState()">
+    <input type="date" id="ngay-kiem-tra" oninput="saveState()" style="font-size:12px;padding:6px 10px;">
   </div>
 </div>
 
@@ -199,7 +294,7 @@
   <div class="progress-row">
     <div style="flex:1">
       <div style="display:flex;justify-content:space-between;margin-bottom:6px">
-        <span style="font-size:12px;font-weight:700;color:var(--text-light)">TIẾN ĐỘ KIỂM TRA</span>
+        <span style="font-size:14px;font-weight:700;color:var(--text-light)">TIẾN ĐỘ KIỂM TRA</span>
         <span class="progress-pct" id="pct">0%</span>
       </div>
       <div class="progress-bar"><div class="progress-bar-fill" id="prog-fill" style="width:0%"></div></div>
@@ -234,7 +329,7 @@
       <tbody id="tbody-a"></tbody>
     </table>
     <div class="legend">
-      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <span style="font-size:13px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
       <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
       <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
       <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
@@ -261,7 +356,7 @@
       <tbody id="tbody-b"></tbody>
     </table>
     <div class="legend">
-      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <span style="font-size:13px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
       <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
       <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
       <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
@@ -288,7 +383,7 @@
       <tbody id="tbody-c"></tbody>
     </table>
     <div class="legend">
-      <span style="font-size:11px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
+      <span style="font-size:13px;font-weight:700;color:var(--text-light);margin-right:4px">Chú thích:</span>
       <div class="legend-item"><div class="legend-dot ld-co"></div>Có đủ / Đạt yêu cầu</div>
       <div class="legend-item"><div class="legend-dot ld-thieu"></div>Thiếu / Chưa đạt</div>
       <div class="legend-item"><div class="legend-dot ld-na"></div>Không áp dụng</div>
@@ -334,6 +429,7 @@
   <div class="date-footer">Ngày kiểm tra: <span id="print-date">……/……/…………</span></div>
 </div>
 
+<div class="created-by">✦ Created by <a href="https://dtt.ilaw.vn" target="_blank">dtt.ilaw.vn</a> ✦</div>
 </div><!-- /content -->
 
 <script>
@@ -542,6 +638,10 @@ buildTable('c');
 loadState();
 updateProgress();
 
+// Set default dia diem
+const ddInput = document.getElementById("dia-diem");
+if (ddInput && !ddInput.value) ddInput.value = "Xã Xuân Trúc";
+
 // Set default date
 const dtInput = document.getElementById('ngay-kiem-tra');
 if (dtInput && !dtInput.value) {
@@ -549,6 +649,205 @@ if (dtInput && !dtInput.value) {
   dtInput.value = today.toISOString().split('T')[0];
   updatePrintDate();
 }
+
+// ===== FILTER =====
+let filterActive = false;
+function toggleFilter() {
+  filterActive = !filterActive;
+  const btn = document.getElementById('btn-filter');
+  btn.classList.toggle('active', filterActive);
+  btn.textContent = filterActive ? '✕ Bỏ lọc' : '🔍 Lọc mục thiếu';
+
+  ['a','b','c'].forEach(sec => {
+    const tbody = document.getElementById('tbody-' + sec);
+    if (!tbody) return;
+    const rows = tbody.querySelectorAll('tr.item-row');
+    let rowIdx = 0;
+    DATA[sec].forEach((item, idx) => {
+      const row = rows[idx];
+      if (!row) return;
+      if (item.group) {
+        row.classList.toggle('filtered-hidden', filterActive);
+        return;
+      }
+      const id = getId(sec, idx);
+      const s = state[id].status;
+      if (filterActive) {
+        row.classList.toggle('filtered-hidden', s !== 'thieu');
+      } else {
+        row.classList.remove('filtered-hidden');
+      }
+    });
+  });
+}
+
+// ===== REPORT MODAL =====
+function showReport() {
+  buildReport();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function buildReport() {
+  const ct = document.getElementById('cong-trinh').value || '(chưa nhập)';
+  const dd = document.getElementById('dia-diem').value || '(chưa nhập)';
+  const nkt = document.getElementById('ngay-kiem-tra').value;
+  let ngayStr = '(chưa nhập)';
+  if (nkt) {
+    const d = new Date(nkt);
+    ngayStr = 'ngày ' + d.getDate() + ' tháng ' + (d.getMonth()+1) + ' năm ' + d.getFullYear();
+  }
+
+  let co=0, thieu=0, na=0, chua=0, total=0;
+  const thieuList = [], chuaList = [];
+  const secNames = {
+    a: 'Phần A - Hồ sơ chuẩn bị đầu tư XD và hợp đồng',
+    b: 'Phần B - Hồ sơ khảo sát XD, thiết kế XD công trình',
+    c: 'Phần C - Hồ sơ quản lý chất lượng thi công XD'
+  };
+
+  ['a','b','c'].forEach(function(sec) {
+    DATA[sec].forEach(function(item, idx) {
+      if (item.group) return;
+      total++;
+      const id = getId(sec, idx);
+      const s = state[id].status;
+      const note = state[id].note || '';
+      if (s === 'co') co++;
+      else if (s === 'thieu') { thieu++; thieuList.push({ stt: item.stt, name: item.name, sec: secNames[sec], note: note }); }
+      else if (s === 'na') na++;
+      else { chua++; chuaList.push({ stt: item.stt, name: item.name, sec: secNames[sec] }); }
+    });
+  });
+
+  // Meta box
+  document.getElementById('report-meta').innerHTML =
+    '<strong>Công trình:</strong> ' + ct + '<br>' +
+    '<strong>Địa điểm:</strong> ' + dd + '<br>' +
+    '<strong>Ngày kiểm tra:</strong> ' + ngayStr + '<br>' +
+    '<strong>Kết quả:</strong> Đã kiểm tra <strong>' + (co+thieu+na) + '/' + total + '</strong> mục &nbsp;—&nbsp; ' +
+    '<span style="color:#dc2626;font-weight:700">' + thieu + ' mục thiếu</span> &nbsp;—&nbsp; ' +
+    '<span style="color:#f59e0b;font-weight:700">' + chua + ' mục chưa kiểm tra</span>';
+
+  // Summary cards
+  document.getElementById('report-summary').innerHTML =
+    '<div class="sum-card sum-co"><div class="num">' + co + '</div><div class="lbl">✓ Có đủ</div></div>' +
+    '<div class="sum-card sum-thieu"><div class="num">' + thieu + '</div><div class="lbl">✗ Thiếu</div></div>' +
+    '<div class="sum-card sum-na"><div class="num">' + na + '</div><div class="lbl">— K.áp dụng</div></div>' +
+    '<div class="sum-card sum-chua"><div class="num">' + chua + '</div><div class="lbl">⏳ Chưa KT</div></div>';
+
+  // Detail tab
+  let detailHtml = '';
+  if (thieuList.length > 0) {
+    detailHtml += '<div class="report-section"><h3 class="h3-thieu">✗ Các mục THIẾU / CHƯA ĐẠT (' + thieuList.length + ' mục)</h3>';
+    thieuList.forEach(function(i) {
+      detailHtml += '<div class="report-item ri-thieu"><span class="ri-stt">[' + i.stt + ']</span><span class="ri-name"><strong>' + i.name + '</strong>' + (i.note ? '<br><em style="color:#dc2626;font-size:12px">Ghi chú: ' + i.note + '</em>' : '') + '</span></div>';
+    });
+    detailHtml += '</div>';
+  }
+  if (chuaList.length > 0) {
+    detailHtml += '<div class="report-section"><h3 class="h3-chua">⏳ Các mục CHƯA KIỂM TRA (' + chuaList.length + ' mục)</h3>';
+    chuaList.forEach(function(i) {
+      detailHtml += '<div class="report-item ri-chua"><span class="ri-stt">[' + i.stt + ']</span><span class="ri-name">' + i.name + '</span></div>';
+    });
+    detailHtml += '</div>';
+  }
+  if (thieuList.length === 0 && chuaList.length === 0) {
+    detailHtml = '<div style="text-align:center;padding:36px;color:#16a34a;font-size:16px;font-weight:700;">✅ Tất cả các mục đã được kiểm tra và đạt yêu cầu!</div>';
+  }
+  document.getElementById('tab-detail').innerHTML = detailHtml;
+
+  // Paste text
+  var lines = [];
+  lines.push('KẾT QUẢ KIỂM TRA HỒ SƠ HOÀN THÀNH CÔNG TRÌNH XÂY DỰNG');
+  lines.push('================================================================');
+  lines.push('Công trình: ' + ct);
+  lines.push('Địa điểm xây dựng: ' + dd);
+  lines.push('Ngày kiểm tra: ' + ngayStr);
+  lines.push('');
+  lines.push('TỔNG HỢP KẾT QUẢ KIỂM TRA:');
+  lines.push('- Tổng số mục kiểm tra: ' + total + ' mục');
+  lines.push('- Có đủ / Đạt yêu cầu: ' + co + ' mục');
+  lines.push('- Thiếu / Chưa đạt yêu cầu: ' + thieu + ' mục');
+  lines.push('- Không áp dụng: ' + na + ' mục');
+  lines.push('- Chưa kiểm tra: ' + chua + ' mục');
+  lines.push('');
+
+  if (thieuList.length > 0) {
+    lines.push('CÁC MỤC HỒ SƠ THIẾU / CHƯA ĐẠT YÊU CẦU:');
+    thieuList.forEach(function(i, idx) {
+      lines.push((idx+1) + '. [Mục ' + i.stt + '] ' + i.name);
+      if (i.note) lines.push('   Ghi chú: ' + i.note);
+    });
+    lines.push('');
+  }
+
+  if (thieu === 0 && chua === 0) {
+    lines.push('Qua kiểm tra, hồ sơ hoàn thành công trình đã đáp ứng đầy đủ các yêu cầu theo quy định hiện hành.');
+  } else if (thieu > 0) {
+    lines.push('Qua kiểm tra, hồ sơ hoàn thành công trình còn thiếu ' + thieu + ' mục tài liệu chưa đáp ứng yêu cầu.');
+    lines.push('Đề nghị chủ đầu tư bổ sung, hoàn thiện các tài liệu nêu trên theo đúng quy định.');
+  }
+  lines.push('');
+  lines.push('(Văn bản được tạo tự động từ checklist tại dtt.ilaw.vn)');
+
+  document.getElementById('report-textarea').value = lines.join('\n');
+}
+
+function copyReport() {
+  const ta = document.getElementById('report-textarea');
+  ta.select();
+  const btn = document.getElementById('btn-copy');
+  navigator.clipboard.writeText(ta.value).then(function() {
+    btn.textContent = '✓ Đã sao chép!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '📋 Sao chép văn bản'; btn.classList.remove('copied'); }, 2500);
+  }).catch(function() {
+    document.execCommand('copy');
+    btn.textContent = '✓ Đã sao chép!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = '📋 Sao chép văn bản'; btn.classList.remove('copied'); }, 2500);
+  });
+}
+
 </script>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>📋 Báo cáo tóm tắt kết quả kiểm tra hồ sơ</h2>
+      <button class="modal-close" onclick="closeModalDirect()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="report-meta" id="report-meta"></div>
+      <div class="report-summary" id="report-summary"></div>
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('tab-detail', this)">📋 Chi tiết mục thiếu</button>
+        <button class="tab-btn" onclick="switchTab('tab-text', this)">📄 Văn bản paste vào biên bản</button>
+      </div>
+      <div class="tab-content active" id="tab-detail"></div>
+      <div class="tab-content" id="tab-text">
+        <p style="font-size:13px;color:#64748b;margin-bottom:10px;">Sao chép đoạn văn bản dưới đây để paste vào biên bản kiểm tra:</p>
+        <textarea class="report-textarea" id="report-textarea" readonly></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-copy" id="btn-copy" onclick="copyReport()">📋 Sao chép văn bản</button>
+      <button class="btn-modal-close" onclick="closeModalDirect()">Đóng</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
